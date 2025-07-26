@@ -37,7 +37,7 @@ public class UrlHelper {
 				.shortCode(this.generateUniqueIdentifier())
 				.createdAt(dateNow)
 				.updatedAt(dateNow)
-				.accesCount(0)
+				.accessCount(0)
 				.build();
 		
 		return urlNew; 
@@ -49,10 +49,10 @@ public class UrlHelper {
 		return UrlDataDTO.builder()
 				.id(null)
 				.url(urlDao.getUrl())
-				.shortCode(this.generateUniqueIdentifier())
+				.shortCode(urlDao.getShortCode())
 				.createdAt(urlDao.getCreatedAt())
 				.updatedAt(urlDao.getUpdatedAt())
-				.accesCount(urlDao.getAccesCount())
+				.accesCount(urlDao.getAccessCount())
 				.build();
 		
 	};

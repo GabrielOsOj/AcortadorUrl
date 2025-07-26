@@ -7,7 +7,7 @@ public interface IurlService {
 
 	public UrlDataDTO saveUrl(UrlIncoming url);
 
-	public void retrieveUrl(String urlShort);
+	public UrlDataDTO retrieveUrl(String urlShort);
 
 	public void updateUrl(String urlShort);
 

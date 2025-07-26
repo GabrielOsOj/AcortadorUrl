@@ -33,12 +33,17 @@ public class UrlDao {
 
 	private String updatedAt;
 
-	private Integer accesCount;
+	private Integer accessCount;
 
 	@Override
 	public String toString() {
 		return "id:" + id + "\nurl:" + url + "\nshortCode:" + shortCode + "\ncreatedAt:" + createdAt + "\nupdatedAt:"
-				+ updatedAt + "\naccesCount:" + accesCount;
+				+ updatedAt + "\naccesCount:" + accessCount;
+	}
+	
+	public UrlDao incrementAccessCount(){
+		this.accessCount +=1;
+		return this;
 	}
 
 }
