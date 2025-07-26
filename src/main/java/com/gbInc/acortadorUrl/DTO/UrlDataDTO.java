@@ -1,7 +1,26 @@
 package com.gbInc.acortadorUrl.DTO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Builder
 public class UrlDataDTO {
-	
-	
+
+	private Long id;
+
+	private String url;
+
+	private String shortCode;
+
+	private String createdAt;
+
+	private String updatedAt;
+
+	private Integer accesCount;
 
 }

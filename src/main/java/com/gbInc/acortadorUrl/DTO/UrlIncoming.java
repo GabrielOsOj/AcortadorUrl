@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UrlIncoming {
-	public String url;
+	private String url;
 }

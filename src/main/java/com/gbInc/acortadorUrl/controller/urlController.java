@@ -1,5 +1,6 @@
 package com.gbInc.acortadorUrl.controller;
 
+import com.gbInc.acortadorUrl.DTO.UrlDataDTO;
 import com.gbInc.acortadorUrl.DTO.UrlIncoming;
 import com.gbInc.acortadorUrl.sevices.IurlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ public class urlController {
 	private IurlService urlSv;
 	
 	@PostMapping("/shorten")
-	public ResponseEntity<String> shorten(@RequestBody UrlIncoming url){
+	public ResponseEntity<UrlDataDTO> shorten(@RequestBody UrlIncoming url){
 		
-		this.urlSv.saveUrl(url);
+		UrlDataDTO urlData = this.urlSv.saveUrl(url);
 		
-		return new ResponseEntity<String>("holanda", HttpStatus.ACCEPTED);
+		return new ResponseEntity<UrlDataDTO>(urlData, HttpStatus.ACCEPTED);
+		
 	}
 	
 }
