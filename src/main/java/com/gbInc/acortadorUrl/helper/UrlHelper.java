@@ -44,6 +44,20 @@ public class UrlHelper {
 		
 	}
 	
+	public UrlDao updateUrlData(UrlDao urlSaved, String newUrl){
+		this.updateUrl(urlSaved, newUrl);
+		this.updateDate(urlSaved);
+		return urlSaved;
+	}
+	
+	private UrlDao updateUrl(UrlDao urlDao,String newUrl){
+		return urlDao.setUrl(newUrl);
+	}
+	
+	private UrlDao updateDate(UrlDao urlDao){
+		return urlDao.setUpdatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern(this.DATE_FORMAT)));
+	}
+	
 	public UrlDataDTO toDTO(UrlDao urlDao){
 		
 		return UrlDataDTO.builder()

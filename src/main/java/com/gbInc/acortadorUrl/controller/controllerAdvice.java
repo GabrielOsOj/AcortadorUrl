@@ -2,7 +2,10 @@ package com.gbInc.acortadorUrl.controller;
 
 import com.gbInc.acortadorUrl.DTO.UrlErrorDTO;
 import com.gbInc.acortadorUrl.exception.UrlException;
+import com.gbInc.acortadorUrl.exception.UrlExceptionConstants;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -16,4 +19,10 @@ public class controllerAdvice {
 		,ex.getHttpCode());
 	}
 	
+	@ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+	public ResponseEntity<UrlErrorDTO>errorDataTipeHandler(){
+		return new ResponseEntity<UrlErrorDTO>(
+				new UrlErrorDTO(HttpStatus.BAD_REQUEST.value(),UrlExceptionConstants.BAD_REQUEST)
+		,HttpStatus.BAD_REQUEST);
+	}
 }

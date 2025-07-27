@@ -9,7 +9,7 @@ public interface IurlService {
 
 	public UrlDataDTO retrieveUrl(String urlShort);
 
-	public void updateUrl(String urlShort);
+	public UrlDataDTO updateUrl(String urlShort,UrlIncoming newUrl);
 
 	public void deleteUrl(String urlShort);
 

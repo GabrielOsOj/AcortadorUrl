@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Setter
 @Getter
@@ -19,6 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
+@Accessors(chain = true)
 public class UrlDao {
 
 	@Id
