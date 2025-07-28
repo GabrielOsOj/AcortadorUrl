@@ -6,6 +6,7 @@ import com.gbInc.acortadorUrl.sevices.IurlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,14 @@ public class urlController {
 		UrlDataDTO urlEdited = this.urlSv.updateUrl(urlShort,newUrl);
 		return new ResponseEntity<>(urlEdited,HttpStatus.OK);
 		
+	}
+	
+	@DeleteMapping("/{urlShort}")
+	public ResponseEntity<Void> deleteUrl(@PathVariable String urlShort){
+		
+		this.urlSv.deleteUrl(urlShort);
+		
+		return ResponseEntity.noContent().build();
 	}
 			
 }

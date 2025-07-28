@@ -61,8 +61,10 @@ public class urlService implements IurlService {
 
 	@Override
 	public void deleteUrl(String urlShort) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from
-																		// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		
+		Long id = this.getUrlSavedFromShortUrl(urlShort).getId();
+		this.urlRepo.deleteById(id);	
+	
 	}
 
 	@Override
