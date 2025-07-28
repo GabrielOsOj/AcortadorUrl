@@ -68,9 +68,10 @@ public class urlService implements IurlService {
 	}
 
 	@Override
-	public void urlStats(String urlShort) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from
-																		// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public UrlDataDTO urlStats(String urlShort) {
+		
+		return this.urlHelper.toDTO(this.getUrlSavedFromShortUrl(urlShort));
+	
 	}
 
 	private UrlDao getUrlSavedFromShortUrl(String urlShort) {

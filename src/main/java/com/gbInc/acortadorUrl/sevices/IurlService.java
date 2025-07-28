@@ -13,6 +13,6 @@ public interface IurlService {
 
 	public void deleteUrl(String urlShort);
 
-	public void urlStats(String urlShort);
+	public UrlDataDTO urlStats(String urlShort);
 
 }

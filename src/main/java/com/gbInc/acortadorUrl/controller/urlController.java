@@ -56,5 +56,14 @@ public class urlController {
 		
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/{urlShort}/stats")
+	public ResponseEntity<UrlDataDTO> getStats(@PathVariable String urlShort){
+		
+		UrlDataDTO urlSaved = this.urlSv.urlStats(urlShort);
+		
+		return new ResponseEntity<>(urlSaved,HttpStatus.OK);
+		
+	}
 			
 }
