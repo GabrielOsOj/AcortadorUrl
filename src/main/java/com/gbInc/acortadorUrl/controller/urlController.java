@@ -4,6 +4,7 @@ import com.gbInc.acortadorUrl.DTO.UrlDataDTO;
 import com.gbInc.acortadorUrl.DTO.UrlIncoming;
 import com.gbInc.acortadorUrl.sevices.IurlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,12 +33,15 @@ public class urlController {
 	}
 	
 	@GetMapping("/{urlShort}")
-	public ResponseEntity<UrlDataDTO> retrieveUrl(
+	public ResponseEntity<String> retrieveUrl(
 	@PathVariable String urlShort){
 		
 		UrlDataDTO urlData = this.urlSv.retrieveUrl(urlShort);
 		
-		return new ResponseEntity<>(urlData,HttpStatus.OK);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", urlData.getUrl());
+		
+		return new ResponseEntity<String>(headers,HttpStatus.FOUND);
 	}
 	
 	@PutMapping("/{urlShort}")
@@ -65,5 +69,5 @@ public class urlController {
 		return new ResponseEntity<>(urlSaved,HttpStatus.OK);
 		
 	}
-			
+		
 }
