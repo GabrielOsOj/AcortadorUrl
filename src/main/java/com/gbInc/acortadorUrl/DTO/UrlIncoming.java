@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 public class UrlIncoming {
 	private String url;
+	private String ownerId;
 }

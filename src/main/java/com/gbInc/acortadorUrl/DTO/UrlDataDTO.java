@@ -22,5 +22,7 @@ public class UrlDataDTO {
 	private String updatedAt;
 
 	private Integer accesCount;
+	
+	private String ownerId;
 
 }

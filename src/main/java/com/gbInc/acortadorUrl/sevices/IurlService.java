@@ -2,6 +2,7 @@ package com.gbInc.acortadorUrl.sevices;
 
 import com.gbInc.acortadorUrl.DTO.UrlDataDTO;
 import com.gbInc.acortadorUrl.DTO.UrlIncoming;
+import java.util.List;
 
 public interface IurlService {
 
@@ -15,4 +16,5 @@ public interface IurlService {
 
 	public UrlDataDTO urlStats(String urlShort);
 
+	public List<UrlDataDTO> getAllUrlsByOwner(UrlIncoming urlIncoming);
 }

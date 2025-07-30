@@ -1,6 +1,7 @@
 package com.gbInc.acortadorUrl.util;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class IdGenerator {
 
@@ -20,6 +21,10 @@ public class IdGenerator {
 
 		}
 		return code.toString();
+	}
+	
+	public String generatedOwnerId(){
+		return UUID.randomUUID().toString();
 	}
 
 	private char getRandomLetter() {

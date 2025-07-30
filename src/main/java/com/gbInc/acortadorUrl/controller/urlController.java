@@ -9,6 +9,7 @@ import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import java.time.Duration;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -104,6 +105,18 @@ public class urlController {
 
 		return new ResponseEntity<>(urlSaved, HttpStatus.OK);
 
+	}
+
+	@PostMapping("/getAll")
+	public ResponseEntity<List<UrlDataDTO>> getAllUrlByOwner(@RequestBody UrlIncoming urlIncoming) {
+
+		if (!this.bucket.tryConsume(1)) {
+			throw this.urlException;
+		}
+
+		List<UrlDataDTO> allUrlsByOwner = this.urlSv.getAllUrlsByOwner(urlIncoming);
+		
+		return new ResponseEntity<>(allUrlsByOwner,HttpStatus.OK);
 	}
 
 }

@@ -7,7 +7,9 @@ import com.gbInc.acortadorUrl.exception.UrlExceptionConstants;
 import com.gbInc.acortadorUrl.helper.UrlHelper;
 import com.gbInc.acortadorUrl.persistence.models.UrlDao;
 import com.gbInc.acortadorUrl.persistence.repository.IurlRepository;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,19 @@ public class urlService implements IurlService {
 
 		return this.urlHelper.toDTO(this.getUrlSavedFromShortUrl(urlShort));
 
+	}
+
+	@Override
+	public List<UrlDataDTO> getAllUrlsByOwner(UrlIncoming urlIncoming) {
+
+		if (urlIncoming.getOwnerId().isBlank()) {
+			throw new UrlException(UrlExceptionConstants.BAD_OWNER_ID, HttpStatus.BAD_REQUEST);
+		}
+		;
+
+		List<UrlDao> urlsByOwner = this.urlRepo.getAllUrlsByOwnerId(urlIncoming.getOwnerId()).get();
+
+		return urlsByOwner.stream().map(url -> this.urlHelper.toDTO(url)).collect(Collectors.toList());
 	}
 
 	private UrlDao getUrlSavedFromShortUrl(String urlShort) {
