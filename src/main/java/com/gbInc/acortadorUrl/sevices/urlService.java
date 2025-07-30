@@ -24,9 +24,12 @@ public class urlService implements IurlService {
 	@Override
 	public UrlDataDTO saveUrl(UrlIncoming url) {
 
+		if (!this.urlHelper.isUrlValid(url)) {
+			throw new UrlException(UrlExceptionConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST);
+		}
+
 		UrlDao newUrlDao = this.urlHelper.getUrlEntity(url);
 		this.urlRepo.save(newUrlDao);
-
 		UrlDataDTO urlDTO = this.urlHelper.toDTO(newUrlDao);
 		urlDTO.setAccesCount(null);
 		return urlDTO;
@@ -45,33 +48,33 @@ public class urlService implements IurlService {
 	}
 
 	@Override
-	public UrlDataDTO updateUrl(String urlShort,UrlIncoming newUrl) {
+	public UrlDataDTO updateUrl(String urlShort, UrlIncoming newUrl) {
 
-		if(newUrl.getUrl().isBlank()){
+		if (newUrl.getUrl().isBlank()) {
 			throw new UrlException(UrlExceptionConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST);
 		}
-		
+
 		UrlDao urlSaved = this.getUrlSavedFromShortUrl(urlShort);
-		
+
 		UrlDao urlUpdated = this.urlHelper.updateUrlData(urlSaved, newUrl.getUrl());
-		
+
 		this.urlRepo.save(urlUpdated);
 		return this.urlHelper.toDTO(urlUpdated.setAccessCount(null));
 	}
 
 	@Override
 	public void deleteUrl(String urlShort) {
-		
+
 		Long id = this.getUrlSavedFromShortUrl(urlShort).getId();
-		this.urlRepo.deleteById(id);	
-	
+		this.urlRepo.deleteById(id);
+
 	}
 
 	@Override
 	public UrlDataDTO urlStats(String urlShort) {
-		
+
 		return this.urlHelper.toDTO(this.getUrlSavedFromShortUrl(urlShort));
-	
+
 	}
 
 	private UrlDao getUrlSavedFromShortUrl(String urlShort) {

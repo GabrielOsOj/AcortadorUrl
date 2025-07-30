@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class UrlHelper {
 	
 	final private String DATE_FORMAT = "yyyy-mm-dd'T'HH:mm:ss'Z'";
+	final private String URL_REGEX_EXAMPLE = "^https?:\\/\\/.+$";
 	
 	@Autowired
 	IurlRepository urlRepo;	
@@ -41,6 +43,12 @@ public class UrlHelper {
 				.build();
 		
 		return urlNew; 
+		
+	}
+	
+	public boolean isUrlValid(UrlIncoming url){
+		
+		return Pattern.compile(this.URL_REGEX_EXAMPLE).matcher(url.getUrl()).find();
 		
 	}
 	
