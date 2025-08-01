@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = { "http://127.0.0.1:5500", "http://localhost:5500" })
 @RequestMapping("/urlShortener")
 public class urlController {
 
@@ -82,14 +84,14 @@ public class urlController {
 
 	}
 
-	@DeleteMapping("/{urlShort}")
-	public ResponseEntity<Void> deleteUrl(@PathVariable String urlShort) {
+	@DeleteMapping("/{userId}/{urlShort}")
+	public ResponseEntity<Void> deleteUrl(@PathVariable String userId, @PathVariable String urlShort) {
 
 		if (!this.bucket.tryConsume(1)) {
 			throw this.urlException;
 		}
 
-		this.urlSv.deleteUrl(urlShort);
+		this.urlSv.deleteUrl(userId,urlShort);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -115,8 +117,8 @@ public class urlController {
 		}
 
 		List<UrlDataDTO> allUrlsByOwner = this.urlSv.getAllUrlsByOwner(urlIncoming);
-		
-		return new ResponseEntity<>(allUrlsByOwner,HttpStatus.OK);
+
+		return new ResponseEntity<>(allUrlsByOwner, HttpStatus.OK);
 	}
 
 }

@@ -65,11 +65,17 @@ public class urlService implements IurlService {
 	}
 
 	@Override
-	public void deleteUrl(String urlShort) {
+	public void deleteUrl(String userId, String urlShort) {
 
-		Long id = this.getUrlSavedFromShortUrl(urlShort).getId();
-		this.urlRepo.deleteById(id);
+		UrlDao urlSaved = this.getUrlSavedFromShortUrl(urlShort);
 
+		if (urlSaved.getCreatedById().equalsIgnoreCase(userId) && urlSaved.getShortCode().equalsIgnoreCase(urlShort)) {
+
+			this.urlRepo.deleteById(urlSaved.getId());
+			return;
+		}
+
+		throw new UrlException(UrlExceptionConstants.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public interface IurlService {
 
 	public UrlDataDTO updateUrl(String urlShort,UrlIncoming newUrl);
 
-	public void deleteUrl(String urlShort);
+	public void deleteUrl(String userId,String urlShort);
 
 	public UrlDataDTO urlStats(String urlShort);
 

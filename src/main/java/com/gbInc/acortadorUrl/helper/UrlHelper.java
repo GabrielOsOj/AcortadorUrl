@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlHelper {
 
-	final private String DATE_FORMAT = "yyyy-mm-dd'T'HH:mm:ss'Z'";
+	final private String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 	final private String URL_REGEX_EXAMPLE = "^https?:\\/\\/.+$";
 
