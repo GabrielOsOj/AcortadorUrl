@@ -69,7 +69,7 @@ public class urlService implements IurlService {
 
 		UrlDao urlSaved = this.getUrlSavedFromShortUrl(urlShort);
 
-		if (urlSaved.getCreatedById().equalsIgnoreCase(userId) && urlSaved.getShortCode().equalsIgnoreCase(urlShort)) {
+		if (urlSaved.getCreatedById().equalsIgnoreCase(userId)) {
 
 			this.urlRepo.deleteById(urlSaved.getId());
 			return;
