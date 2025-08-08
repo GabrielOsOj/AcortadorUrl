@@ -32,25 +32,19 @@ public class urlController {
 	@Autowired
 	private IurlService urlSv;
 
-	private final Bucket bucket;
+	@Autowired
+	private Bucket bucket;
 
 	private final UrlException urlException;
 
 	public urlController() {
-
-		Bandwidth limit = Bandwidth.builder().capacity(10).refillIntervally(10, Duration.ofMinutes(1)).build();
-
-		this.bucket = Bucket.builder().addLimit(limit).build();
-
 		this.urlException = new UrlException(UrlExceptionConstants.TOO_MANY_REQUESTS, HttpStatus.TOO_MANY_REQUESTS);
 	}
 
 	@PostMapping("/shorten")
 	public ResponseEntity<UrlDataDTO> shorten(@RequestBody UrlIncoming url) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
 		UrlDataDTO urlData = this.urlSv.saveUrl(url);
 		return new ResponseEntity<>(urlData, HttpStatus.ACCEPTED);
@@ -60,9 +54,7 @@ public class urlController {
 	@GetMapping("/{urlShort}")
 	public ResponseEntity<String> retrieveUrl(@PathVariable String urlShort) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
 		UrlDataDTO urlData = this.urlSv.retrieveUrl(urlShort);
 
@@ -75,9 +67,7 @@ public class urlController {
 	@PutMapping("/{urlShort}")
 	public ResponseEntity<UrlDataDTO> editUrl(@PathVariable String urlShort, @RequestBody UrlIncoming newUrl) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
 		UrlDataDTO urlEdited = this.urlSv.updateUrl(urlShort, newUrl);
 		return new ResponseEntity<>(urlEdited, HttpStatus.OK);
@@ -87,11 +77,9 @@ public class urlController {
 	@DeleteMapping("/{userId}/{urlShort}")
 	public ResponseEntity<Void> deleteUrl(@PathVariable String userId, @PathVariable String urlShort) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
-		this.urlSv.deleteUrl(userId,urlShort);
+		this.urlSv.deleteUrl(userId, urlShort);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -99,9 +87,7 @@ public class urlController {
 	@GetMapping("/{urlShort}/stats")
 	public ResponseEntity<UrlDataDTO> getStats(@PathVariable String urlShort) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
 		UrlDataDTO urlSaved = this.urlSv.urlStats(urlShort);
 
@@ -112,13 +98,18 @@ public class urlController {
 	@PostMapping("/getAll")
 	public ResponseEntity<List<UrlDataDTO>> getAllUrlByOwner(@RequestBody UrlIncoming urlIncoming) {
 
-		if (!this.bucket.tryConsume(1)) {
-			throw this.urlException;
-		}
+		this.checkBucket();
 
 		List<UrlDataDTO> allUrlsByOwner = this.urlSv.getAllUrlsByOwner(urlIncoming);
 
 		return new ResponseEntity<>(allUrlsByOwner, HttpStatus.OK);
+	}
+
+	private void checkBucket() {
+		if (this.bucket.tryConsume(1)) {
+			return;
+		}
+		throw this.urlException;
 	}
 
 }

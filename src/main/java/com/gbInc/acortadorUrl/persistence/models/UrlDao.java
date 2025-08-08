@@ -39,11 +39,6 @@ public class UrlDao {
 	
 	private String createdById;
 
-	@Override
-	public String toString() {
-		return "id:" + id + "\nurl:" + url + "\nshortCode:" + shortCode + "\ncreatedAt:" + createdAt + "\nupdatedAt:"
-				+ updatedAt + "\naccesCount:" + accessCount + "\nCreatedBy:"+createdById;
-	}
 	
 	public UrlDao incrementAccessCount(){
 		this.accessCount +=1;

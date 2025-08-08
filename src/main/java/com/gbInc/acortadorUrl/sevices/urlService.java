@@ -58,11 +58,16 @@ public class urlService implements IurlService {
 
 		UrlDao urlSaved = this.getUrlSavedFromShortUrl(urlShort);
 
+		if (!urlSaved.getCreatedById().equalsIgnoreCase(newUrl.getOwnerId())) {
+			throw new UrlException(UrlExceptionConstants.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+		}
+
 		UrlDao urlUpdated = this.urlHelper.updateUrlData(urlSaved, newUrl.getUrl());
 
 		this.urlRepo.save(urlUpdated);
 		return this.urlHelper.toDTO(urlUpdated.setAccessCount(null));
 	}
+	
 
 	@Override
 	public void deleteUrl(String userId, String urlShort) {

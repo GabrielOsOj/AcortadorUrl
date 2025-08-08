@@ -87,6 +87,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -120,10 +127,7 @@
                             com/gbInc/**/DTO*
                         </exclude>
                         <exclude>
-                            com/gbInc/**/bazar/*
-                        </exclude>
-                        <exclude>
-                            com/gbInc/**/mappers/**
+                            com/gbInc/**/AcortadorUrlApplication.class
                         </exclude>
                         <exclude>
                             com/gbInc/**/exception/**
