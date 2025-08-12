@@ -176,6 +176,14 @@ public class DataProvider {
 
 		return url;
 	}
+	
+		public UrlIncoming getNewUrlIncomingBadUrl() {
+		UrlIncoming url = new UrlIncoming();
+		url.setUrl("urlNotValid");
+		url.setOwnerId("08c7824b-b62c-4067-a80e-eb035bfe02a2");
+
+		return url;
+	}
 
 	///
 	public UrlDao getUrlToDelete() {

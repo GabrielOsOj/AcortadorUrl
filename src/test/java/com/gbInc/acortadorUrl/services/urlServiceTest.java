@@ -124,6 +124,7 @@ public class urlServiceTest {
 		UrlIncoming newUrl = this.dataP.getNewUrlToSave();
 
 		// when
+		when(this.urlHelper.isUrlValid(any())).thenReturn(true);
 		when(this.urlRepo.getSameIdentifier("shortcodeUnique")).thenReturn(Optional.of(this.dataP.getUrlPreRetrieved()));
 		when(this.urlHelper.updateUrlData(any(), any())).thenReturn(this.dataP.getUrlSavedEdited());
 
@@ -143,8 +144,7 @@ public class urlServiceTest {
 		UrlIncoming newUrl = this.dataP.getNewUrlBadOwner();
 
 		// when
-		when(this.urlRepo.getSameIdentifier("shortcodeUnique")).thenReturn(Optional.of(this.dataP.getUrlPreRetrieved()));
-
+	
 		assertThrows(UrlException.class,()->{this.urlSv.updateUrl(urlSaved, newUrl);}
 		);
 	}
@@ -155,6 +155,19 @@ public class urlServiceTest {
 		String urlSaved = "helloWorld2";
 		UrlIncoming newUrl = this.dataP.getNewUrlBlankUrl();
 		// when
+		assertThrows(UrlException.class, () -> {
+			this.urlSv.updateUrl(urlSaved, newUrl);
+		});
+	}
+	
+	@Test
+	public void updateUrlBadUrlIncoming() {
+		// given
+		String urlSaved = "helloWorld2";
+		UrlIncoming newUrl = this.dataP.getNewUrlIncomingBadUrl();
+		// when
+		when(this.urlHelper.isUrlValid(any())).
+				thenReturn(false);
 		assertThrows(UrlException.class, () -> {
 			this.urlSv.updateUrl(urlSaved, newUrl);
 		});

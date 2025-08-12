@@ -52,9 +52,10 @@ public class urlService implements IurlService {
 	@Override
 	public UrlDataDTO updateUrl(String urlShort, UrlIncoming newUrl) {
 
-		if (newUrl.getUrl().isBlank()) {
+		if (newUrl.getUrl().isBlank() || !this.urlHelper.isUrlValid(newUrl)) {
 			throw new UrlException(UrlExceptionConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST);
 		}
+		;
 
 		UrlDao urlSaved = this.getUrlSavedFromShortUrl(urlShort);
 
@@ -67,7 +68,6 @@ public class urlService implements IurlService {
 		this.urlRepo.save(urlUpdated);
 		return this.urlHelper.toDTO(urlUpdated.setAccessCount(null));
 	}
-	
 
 	@Override
 	public void deleteUrl(String userId, String urlShort) {
