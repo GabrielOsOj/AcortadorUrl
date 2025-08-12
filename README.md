@@ -1,5 +1,3 @@
-# Acortador de urls
-
 # **Acortador de URLs**
 
 Servicio web que permite reducir el largo de las URLs y obtener métricas de uso. Desarrollado con Java y Spring.
